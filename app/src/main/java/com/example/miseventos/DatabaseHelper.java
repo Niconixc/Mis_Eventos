@@ -35,24 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public User getUser(String username, String password) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, null, COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=?", new String[]{username, password}, null, null, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
-            String secretQuestion = cursor.getString(cursor.getColumnIndex(COLUMN_SECRET_QUESTION));
-            String secretAnswer = cursor.getString(cursor.getColumnIndex(COLUMN_SECRET_ANSWER));
-            cursor.close();
-            return new User(id, username, password, secretQuestion, secretAnswer);
-        } else {
-            if (cursor != null) {
-                cursor.close();
-            }
-            return null;
-        }
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createUserTable = "CREATE TABLE " + TABLE_USERS + "(" +
@@ -151,4 +133,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public User getUser(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS, null, COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=?", new String[]{username, password}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+            String secretQuestion = cursor.getString(cursor.getColumnIndex(COLUMN_SECRET_QUESTION));
+            String secretAnswer = cursor.getString(cursor.getColumnIndex(COLUMN_SECRET_ANSWER));
+            cursor.close();
+            return new User(id, username, password, secretQuestion, secretAnswer);
+        } else {
+            if (cursor != null) {
+                cursor.close();
+            }
+            return null;
+        }
+    }
 }
