@@ -45,6 +45,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private boolean validateRecovery(String user, String answer) {
         // Implementar lógica de validación
-        return true; // Placeholder para simplificación
+        return true; // Placeholder para simplificación olaaaaa
     }
 }
